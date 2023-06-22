@@ -27,4 +27,10 @@ public class Calculator {
         }
         return numerator / denominator;
     }
+
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator();
+        int result = calculator.divide(12, 23);
+        System.out.println("result = " + result);
+    }
 }
