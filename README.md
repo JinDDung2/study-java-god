@@ -1,4 +1,5 @@
 # 목적
+
 - 자바의 기본기를 다지자
 - 자바의 신 책을 읽고 공부 내용 기록하기
 - 읽고 나만의 언어로 정리하기
@@ -131,15 +132,15 @@ byte : -128~127
 | byteMax | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 127 |
 
 ```java
-Byte byteMin = -128;
-        Byte byteMax = 127;
-        System.out.println("byteMin = " + byteMin); // - 128
-        System.out.println("byteMax = " + byteMax); // 127
+Byte byteMin=-128;
+        Byte byteMax=127;
+        System.out.println("byteMin = "+byteMin); // - 128
+        System.out.println("byteMax = "+byteMax); // 127
 
         byteMin--;
         byteMax++;
-        System.out.println("byteMin = " + byteMin); // 127
-        System.out.println("byteMax = " + byteMax); // -128
+        System.out.println("byteMin = "+byteMin); // 127
+        System.out.println("byteMax = "+byteMax); // -128
 ```
 
 byteMin의 값을 2진수로 표현하면 1000_0000 에서 1을 뺀다면 0111_1111이 되고,
@@ -165,7 +166,7 @@ char 정의하는 방법 3가지 !! char는 unsigned이므로 음수를 저장�
 
 변수 선언 위치에 지역 변수, 매개 변수, 인스턴스 변수를 구분하고, 인스턴스 변수 앞에 static을 선언하면 클래스 변수가 됩니다.
 
-- int or long 자료형을 사용하면 되는데  byte 타입은 왜 만들었을까요?
+- int or long 자료형을 사용하면 되는데 byte 타입은 왜 만들었을까요?
 
 byte 타입을 활용해서 동영상이나 이미지 저장을 할 때, 적은 공간에 보다 많은 내용을 저장할 수 있습니다.
 </details>
@@ -187,11 +188,69 @@ A조건 && B 조건이 있을 때, A조건이 false일 경우 B조건은 연산�
 모든 참조 자료형은 +연산만 가능. 해당 클래스에 있는 toString 메소드의 결과에 +연산을 하는 것
 
 기본자료형 형 변환(casting)
+
 * 작은 타입에서 큰 타입으로 형 변환할 때, 캐스팅해줄 필요가 없음
 * 큰 타입에서 작은 타입으로 형 변환할 때, 명시적으로 캐스팅을 해주어야 함.
 * 단, 큰 타입에서 작은 타입으로 형 변환할 때는 예상치 못한 값이 올 수도 있다.
-  (ex. short  shortValue = 256 → shortValue = (byte) 256 → shortValue의 값은 0이 나옴
+  (ex. short shortValue = 256 → shortValue = (byte) 256 → shortValue의 값은 0이 나옴
 
 ❗️ 실제 돈을 계산하는 부분을 계산할 때에는 double이나 float을 절대 사용해서 안된다. 이런 중요한 계산이 필요할 때 BigDecimal이라는 클래스를 사용해야 한다.
+
+</details>
+
+<details>
+
+<summary><h2>제가 조건을 좀 따져요</h2></summary>
+
+switch 문장에서는 한번 조건을 만족시켜 줬다면, 그 다음 break가 올 때 까지, 어떤 case가 오든 상관 안하고 계속 무사 퉁과시킨다.
+
+- 왜 이렇게 break를 쓰게 했을까?
+
+비교 대상이 값에 범위에 있다면 if를 사용하겠지만, 특정 조건에 따른 처리를 해야 할 경우에는 switch문을 사용하면 좋다.
+
+ex) 달력
+
+```java
+public class Calender {
+    public void switchCalender(int month) {
+        switch (month) {
+            case 1:
+            case 3:
+            case
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                System.out.println(month + " has 31 days");
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                System.out.println(month + " has 01 days");
+                break;
+            case 2:
+                System.out.println(month + " has 28 or 29 days");
+                break;
+            default
+                ;
+                System.out.println(month + " is not a month");
+        }
+    }
+}
+```
+
+- 보통 default를 마지막에 두는데 꼭 마지막에 둬야 하나요?
+
+문법상 정해진 것은 없지만, default를 중간에 둘 경우 원하지 않는 결과가 나올 수 있기에 마지막에 두는 것을 권장함.
+
+switch를 통해 숫자를 비교할 때, 적은 숫자부터 증가시켜주는 것을 권장함.
+
+반복문에서 continue와 break;
+
+continue는 반복문 중괄호 시작으로 돌아감. 즉, 반복문 내에서 continue 하위의 부분을 생략
+
+break는 반복문을 종료시킴 반복문의 마지막 중괄호 밖으로 나감.
 
 </details>
