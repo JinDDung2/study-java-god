@@ -200,7 +200,7 @@ A조건 && B 조건이 있을 때, A조건이 false일 경우 B조건은 연산�
 
 <details>
 
-<summary><h2>제가 조건을 좀 따져요</h2></summary>
+<summary><h2>Chapter 6. 제가 조건을 좀 따져요</h2></summary>
 
 switch 문장에서는 한번 조건을 만족시켜 줬다면, 그 다음 break가 올 때 까지, 어떤 case가 오든 상관 안하고 계속 무사 퉁과시킨다.
 
@@ -253,4 +253,167 @@ continue는 반복문 중괄호 시작으로 돌아감. 즉, 반복문 내에서
 
 break는 반복문을 종료시킴 반복문의 마지막 중괄호 밖으로 나감.
 
+</details>
+
+<details>
+
+<summary><h2>Chapter 7. 여러 데이터를 하나에 넣을 수는 없을까요?</h2></summary>
+
+배열은 무조건 선언할 때 크기가 지정되어야 함. 이러한 단점을 보완한 것이 Collections임
+
+배열을 선언한 후 출력하면 “타입이름@고유번호”순으로 출력된다. toString()이라는 메소드를 만들어주면 배열의 값들 출력 가능
+
+[Ljava.lang.String.@1304e18c]
+
+- [L : 가장 앞으로 “[”는 배열을 의미하며, L은 해당 배열은 참조 자료형이라는 의미
+- java.lang.String : 해당 배열이 어떤 타입의 배열인지를 알려줌
+- @1304e18c : 해당 배열의 고유 번호
+
+참조 자료형 배열의 각각의 값은 초기화하지 않으면 null이 된다.
+
+</details>
+
+<details>
+
+<summary><h2>Chapter 8. 참조 자료형에 대해서 더 자세히 알아봅시다</h2></summary>
+
+* 참조자료형과 기본자료형의 차이는?
+  참조 자료형은 new를 사용해서 객체를 생성해야 한다.(String 제외)
+
+"+" 연산은 참조 자료형 중에서 String 클래스만 사용 가능하고 나머지는 클래스에서 사용할 수 없다.
+다른 참조형이 사용할 수 있는 연산자는 값을 할당하기 위한 등호 오직 "=" 뿐이다.
+
+기본 생성자는 자바에서 자동으로 만들어 준다. 하지만 다른 파라미터를 포함한 생성자를 만들어 둘 경우 기본 생성자는 자동으로 만들어지지 않기 때문에, 명시적으로 만들어 두어야 한다.
+
+* 생성자는 왜 필요할까?
+  이름에서 알 수 있듯이 객체를 생성하여 사용하기 위해 꼭 필요한 것이다. 객체를 생성하는 곳은 객체를 설계느느 클래스 내부가 아닌 다른 메서드(main 같은)의 내부이기 때문이다.
+
+생성자를 클래스 내에 만들 때, 다른 메소드 아래 두어도 상관은 없지만, 암묵적인 약속 하에 필드, 생성자, 메소드 순으로 정의한다.
+
+* Dto를 만들면 무슨 장점이 있을까? (아키텍처 관점 말고 자바 관점에서 생각해보자)
+
+자바의 메서드를 선언할 때, 리턴 타입은 최대 한가지 이다. 즉, 복합적인 데이터를 리턴하려면 두 가지 방식이 있다. 여러 개의 데이터를 넣은 배열(or Collections)과 참조 자료형(객체)이다.
+복합적인 데이터가 각각 다른 타입이라면 선택지는 객체를 만드는 것밖에 없다. 이렇게 만든 객체(0000DTO)가 리턴타입이 된다.
+
+<h3>메소드 overloading</h3>
+클래스의 생성자는 파라미터들을 서로 다르게 하여 선언이 가능하며 이는 메서드 오버로딩의 대표적인 예시 이다.
+메소드 오버로딩은 메서드 이름만 같도록 하고, 파라미터만 다르게 하는 것을 의미한다.
+(단, 파라미터의 타입과 개수가 같지만 파라미터의 이만 다르다면 같은 메소드로 인식한다.)
+
+* 왜 메소드 오버로딩을 사용할까?
+
+같은 역할을 하는 메소드는 같은 메소드 이름을 가져야 하지만, 파라미터가 다를 수 있기 때문이다. 예를 들어, System.out.println()을 할 때, 소 괄호 안에 인자가 달라도 그대로 출력이 되는 것은
+메소드 오버로딩이 되어 있기 때문이다.
+만약, 오버로딩이 불가하다면 printlnInt(), printlnLong() 등 이렇게 표현해야 하기에 더 불편하다.
+
+* 메서드를 정의할 때, 리턴 뒤에 다른 구문을 넣으면 어떻게 될까?
+
+```java
+    pubic String getName(){
+        String name="heo";
+        return name;
+        name+="king";
+        }
+```
+
+unreachable statement 에러가 발생한다. 즉, 리턴 문장 이후 어떤 문장도 있으면 안된다.
+
+* if문 안에 리턴 문장이 있을 경우
+
+if문 안에 리턴 문장이 있을 경우, if 밖에 혹은 else구문을 통해 리턴을 만들어 두어야 한다. 보통 전자가 깔끔하다.
+
+```java
+    public String getSocialLogin(String providerId){
+        if(providerId=="kakao"){
+        return"kakao";
+        }
+        return"naver";
+        }
+```
+
+<h3>static 메서드와 일반 메소드의 차이
+
+static 메서드 안에서 변수를 활용하려면 static을 선언한 변수여야 한다.
+(static은 클래스 변수를 사용하기 때문.)
+
+객체는 여러개 생성하지만, 한 번만 호출되어야 하는 코드가 있다면 "static 블록"을 사용한다.
+
+<h3><Pass by value, Pass by reference></h3>
+
+Pass by value : 값만 전달한다 -> 호출되기 전과 후에 데이터가 변경되지 않음
+Pass by reference : 값이 아닌 객체의 참조를 전달한다-> 호출한 메소드의 데이터에도 영향을 줌
+
+기본 자료형은 **무조건** **"Pass By value"** 로 데이터를 전달한다.
+참조 자료형은 **"Pass By reference"** 로 데이터를 전달한다.
+
+```java
+public class Reference {
+    public void callPassByValue() {
+        int a = 100;
+        String b = "b";
+        System.out.println("before passByValue");
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+        passByValue(a, b);
+        System.out.println("after passByValue");
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+    }
+
+    public void passByValue(int a, String b) {
+        a = 1000;
+        b = "change";
+        System.out.println("in passByValue");
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+    }
+
+    public void callByReference() {
+        MemberDto member = new MemberDto("wonrok", 20);
+        System.out.println("before passByReference");
+        System.out.println("member = " + member);
+        passByReference(member);
+        System.out.println("after passByReference");
+        System.out.println("member = " + member);
+    }
+
+    public void passByReference(MemberDto member) {
+        member.setName("rokwon");
+        member.setAge(27);
+    }
+
+    public static void main(String[] args) {
+        Reference reference = new Reference();
+        reference.callPassByValue();
+        /*
+        before passByValue
+        a = 100
+        b = b
+        in passByValue
+        a = 1000
+        b = change
+        after passByValue
+        a = 100
+        b = b
+        */
+        reference.callByReference();
+        /*
+        before passByReference
+        member = MemberDto{name='wonrok', age=20}
+        after passByReference
+        member = MemberDto{name='rokwon', age=27}
+         */
+    }
+}
+
+```
+pass by value는 값을 전달하는 작업이고, 호출되기 전과 후에 데이터가 변경되지 않는다.
+-> 모든 기본 자료형은 pass by value이다.
+pass by reference는 값이 전달되면, 호출한 메소드의 데이터에도 영향이 있다.
+-> 참조자료형은 값이 아닌 참조가 전달되는 pass by reference이다.
+
+파라미터를 여러개 넣어 주는 신기한 방법
+```java
+public void getMemberName(String... names) {...}
+```
 </details>
