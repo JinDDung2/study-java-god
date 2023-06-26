@@ -582,3 +582,83 @@ toString() 메소드만 유일하게 final이 선언되지 않아 오버라이�
 마지막으로 추상클래스는 final 메소드를 선언할 수 있지만, 인터페이스는 final 메소드를 선언할 수 없습니다.
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 14. 다 배운 것 같지만 중요한 것이 있어요</h2></summary>
+
+자바에서 예외는 “우리가 예상한, 혹은 예상치도 못한 일이 발생하는 것을 미리 예견하고 안전장치를 하는 것”
+
+## try-catch
+
+예외가 발생하지 않는 경우 → try 내에 모든 문장이 실행되고 try-cacth 이후 내용이 실행됨
+
+예외가 발생하는 경우 → try내에서 예외가 발생한 지점 이후부터 실행이 안되고, cacth 내용이 실행된 후에 try-cacth 이후 내용이 실행
+
+try 내부에서 변수를 선언하였는데, 에러가 터질 경우 → ‘cannot found symbol’ 에러 호출
+
+catch는 여러개 사용 가능
+
+### finally
+
+try-catch 구문에서 예외가 터지든 안터지든 finally 구문은 무조건 실행 됨
+
+모든 예외의 부모 클래스는 java.lang.Exception 클래스다.
+
+모든 예외의 할아버지는 java.lang.Throwable 클래스다.
+
+그래서 Excetpion으로 catch하는 것은 catch중 마지막에 두어야 한다.
+
+## 예외의 종류
+
+- checked exception
+- error
+  - 자바 프로그램 밖에서 발생한 예외
+  - 서버의 디스크 고장
+  - 메인보드가 맛이 감
+  - 자바 프로그램이 제대로 동작하지 못하는 경우
+- runtime exception
+  - 미리 감지하지 못했을 때 발생
+  - RuntimException을 확장한 예외들 (ex. NPE)
+  - 컴파일에 체크를 하지 않기 때문에 unchecked exception 이라고도 부름\
+
+### Error와 Exception의 차이
+
+- 프로그램 안에서 발생하면 exception, 밖에서 발생하면 error
+- 프로그램이 멈추면 error, 계속 실행할 수 있으면 excetpion
+- 프로세스에 영항을 주면 error, 쓰레드에 영향을 주면 exception
+
+## Throwable 클래스
+
+### 생성자
+
+- Throwable()
+- Throwable(String message)
+- Throwable(String message, Throwable cause)
+- Throwable(Throwable cause)
+
+### 자주 사용하는 메소드
+
+- getMessage()
+  - 예외 메시지를 String 형태로 받음
+  - 예외가 출력되었을 때, 어떤 예외가 발생되었는지 확인하기에 유용함
+  - 메시지를 활용하여 별도의 예외 메시지를 사용자에게 보여주기 좋음
+  - ex) null
+- toString()
+  - 예외 메시지를 String 형태로 제공 받음
+  - getMessage() 메소드보다는 약간 더 자세하게, 예외 클래스 이름도 같이 제공
+  - ex)null \n java.lang.NullPointerExcetpion
+- printstackTrace()
+  - 가장 첫 줄에는 예외 메시지를 출력
+  - 두 번째 줄부터는 예외가 발생하게 된 메소드들의 호출 관계(스택 트레이스)를 출력
+  - ex)null \n java.lang.NullPointerExcetpion \n ~~~~~(많음)
+
+## throws
+
+내부 메소드에서 throws를 했다면 외부 메소드에서도 throws를 해야함.
+
+혹은 내부 메소드를 try~catch로 잡아도 상관없음
+
+[Java Excetpion Strategey](https://stackify.com/best-practices-exceptions-java/)
+
+</details>
