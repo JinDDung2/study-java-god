@@ -1,5 +1,7 @@
 package chapter8;
 
+import java.util.Objects;
+
 public class MemberDto {
     private String name;
     private int age;
@@ -34,5 +36,18 @@ public class MemberDto {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MemberDto memberDto = (MemberDto) o;
+        return age == memberDto.age && Objects.equals(name, memberDto.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 }
