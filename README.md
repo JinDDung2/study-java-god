@@ -713,5 +713,36 @@ String은 불변임 → +로 다른 스트링을 더해줄 경우 기존 String 
 
 StringBuffer은 Thread-safe하지만, StringBuilder는 Thread-safe하지 않음
 
+</details>
+
+<details>
+
+<summary><h2>Chapter 17.어노테이션이라는 것도 알아야 한다</h2></summary>
+
+## 어노테이션을 위한 메타 어노테이션
+
+### @Target
+
+어노테이션을 어떤 것에 적용할 것인가?
+FIELD, METHOD, TYPE
+
+### @Retention
+
+얼마나 오래 어노테이션의 정보를 유지할 것인가?
+SOURCE : 컴파일 시 사라짐
+CLASS : 컴파일러에 의해 참조 가능. 하지만, 가상 머신에서 사라짐
+RUNTIME : 가상 머신에 의해 참조 가능
+
+### @Documented
+
+Javadocs API 문서에 포함되어 있다는 뜻
+
+### @Inherited
+
+모든 자식 클래스에서 부모 클래스의 어노테이션을 사용 가능하다는 뜻
+
+## 어노테이션은 왜만들어 졌을까?
+
+어노테이션이 만들어지기 전까지는 모든 자바 애플리케이션의 설정을 xml이나 properties 라는 파일에 저장했는데 이로 인해, 복잡해지고 설정이 어디에 쓰이는지 이해하려면 오랜 시간이 소요되었다. 어노테이션은 이러한 문제를 일부 해결해 주었다.
 
 </details>
