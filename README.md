@@ -620,7 +620,7 @@ try-catch 구문에서 예외가 터지든 안터지든 finally 구문은 무조
 - runtime exception
   - 미리 감지하지 못했을 때 발생
   - RuntimException을 확장한 예외들 (ex. NPE)
-  - 컴파일에 체크를 하지 않기 때문에 unchecked exception 이라고도 부름\
+  - 컴파일에 체크를 하지 않기 때문에 unchecked exception 이라고도 부름
 
 ### Error와 Exception의 차이
 
@@ -660,5 +660,58 @@ try-catch 구문에서 예외가 터지든 안터지든 finally 구문은 무조
 혹은 내부 메소드를 try~catch로 잡아도 상관없음
 
 [Java Excetpion Strategey](https://stackify.com/best-practices-exceptions-java/)
+
+</details>
+
+<details>
+
+<summary><h2>Chapter 15. String</h2></summary>
+
+> public final class String extends Object implements Serializable, Comparable<String>, CharSequence
+>
+
+final이 선언되어 있는 것을 보니 더이상 확장할 수 없음을 알 수 있다.
+
+- Serializable 인터페이스는 구현해야 하는 메소드가 하나도 없다. 🤔? 인터페이스를 구현한다고 선언해 놓으면, 해당 객체를 파일로 저장하거나 다른 서버에 전송 가능한 상태가 된다.
+- Comparable 인터페이스는 compareTo()라는 메소드 하나만 선언되어 있다. 이 메소드는 equals() 메소드와 다른 점은 리턴 타입이 int다. 객체의 순서를 처리할 때 유용하게 사용된다.
+- CharSequence 인터페이스는 해당 클래스가 문자열을 다루기 위한 클래스라는 것을 명시적으로 나타내는 것이다. (StringBuilder와 StringBuffer 클래스도 이 인터페이스를 구현해 두었다.)
+
+## String 생성자
+
+String(byte[] bytes)
+
+String(byes[] bytes, String charsetName)
+
+글자가 깨지는 현상을 방지하기 위해 byte 배열로 생성할 때 사용한 캐릭터 셋을 문자열로 다시 전활할 때에도 동일하게 사용해야 한다.
+
+null = 객체에 초기화가 되어 있지 않을 때 발생
+
+null을 체크하는 습관 필요
+
+## 메소드
+
+- lenght() → 길이
+- isEmpty() → 값이 비어있는지
+- equlasIgnoreCase(String another) → 대소문자 구분하지 않고 두 개의 값이 같은지 확인
+- startsWith(String prefix) → 파라미터 값으로 시작하는지 확인
+- endWith(String suffix) → 파라미터 값으로 끝나는지 확인
+- matches(String regex)
+- conatins(CharSquence c)
+- indexOf(~~) → 가장 왼쪽부터 문자열이나 char를 찾음 (못찾으면 -1 리턴)
+- lastIndexOf(~~) → 가장 오른쪽부터 문자열이나 char를 찾음
+- subString(int beginIndex, int endIndex) → beginIndex이상 endIndex미만 문자열을 잘라 리턴함
+- split(String regex) → 정규표현식에 맞추어 문자열을 잘라 String 배열로 리턴
+- trim() → 문자열 맨 앞과 맨 뒤의 공백 제거 후 문자열 리턴
+- replace(CharSequence target, CharSequence replacement) → 해당 문자열에 있는 target과 같은 값을 replacement 값으로 대체
+- replaceAll(String regex, String replacement) → 해당 문자열 내용 중 regex에 포현된 정규표현식에 포함되는 모든 애용을 replacement로 대체
+- toLowerCase()
+- toUpperCase()
+
+자바에는 Constant Pool 존재 → String의 경우 동일한 값을 갖는 객체가 있으면, 이미 만든 객체를 재사용함
+
+String은 불변임 → +로 다른 스트링을 더해줄 경우 기존 String 객체는 버려지고 연산이 수행된 새로운 객체가 만들어 지는 것임 → 이를 보완하는 것이 StringBuffer와 StringBuilder임
+
+StringBuffer은 Thread-safe하지만, StringBuilder는 Thread-safe하지 않음
+
 
 </details>
