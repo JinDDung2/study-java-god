@@ -787,3 +787,25 @@ GC 종류
 - G1
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 20. 가장 많이 쓰이는 패키지는 자바랭</h2></summary>
+
+자바의 패키지 중에서 유일하게 java.lang 패키지에 있는 클래스들은 import를 안해도 사용 가능함
+
+래퍼 클래스
+
+parse타입이름() → 기본 자료형을 리턴
+
+valueOf() → 참조 자료형을 리턴
+
+**객체를 출력할 때 toString()을 사용하는 것보다 valueOf() 메소드를 사용하는 것이 훨씬 안정적임**
+
+obj = null;
+
+toString → NPE
+
+valoueOf → null → StringBuilder로 변환해서 string 덧셈 연산을 가능하게 해줌
+
+</details>
