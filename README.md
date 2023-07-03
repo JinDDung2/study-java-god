@@ -746,3 +746,44 @@ Javadocs API 문서에 포함되어 있다는 뜻
 어노테이션이 만들어지기 전까지는 모든 자바 애플리케이션의 설정을 xml이나 properties 라는 파일에 저장했는데 이로 인해, 복잡해지고 설정이 어디에 쓰이는지 이해하려면 오랜 시간이 소요되었다. 어노테이션은 이러한 문제를 일부 해결해 주었다.
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 19. 이쯤에서 자바의 역사와 JVM에 대해서 알아보자</h2></summary>
+
+javac라는 명령어로 컴파일을 한다는 것은 개발자가 만든 java파일을 어떤 OS에서도 수행할 수 있도록 바이트 코드로 변화한 파일(.class)을 만든 것 뿐임
+
+컴퓨터가 알아먹을 수 있도록 변환 작업이 필요한데 이것을 JIT 컴파일러가 하는 것
+(JVM → 기계 코드)
+
+JIT 컴파일러 : 명칭이 컴파일러 이지만, 실행시에 적용 되는 기술로 동적 변환 하는 것이다.
+
+HotSpot Client Compiler : CPU 코어가 하나 뿐인 사용자를 위해 만들어짐
+→ 애플리케이션 시작 시간을 빠르게 하고, 적은 메모리를 점유함
+
+JVM은 개발자가 작성하 자바 프로그램이 수행되는 프로세스를 의미한다.
+
+JVM 내에서 메모리를 관리 해주는 것을 GC로 부른다.
+
+GC
+
+- Young - Eden과 Survivor 영역 존재
+  - Edan 영역에서 객체가 생성됨
+  - Edan 영역이 가득 차면 살아있는 객체만 Survivor 영역으로 복사 후 Edan 영역을 다시 채움
+  - Survivor 영역이 꽉 차면 또 다른 Survivor 영역으로 객체가 복사됨. 이 때 Edan 영역에 있는 객체들 중 살아있는 객체들도 다른 Survivor 영역으로 감.
+    (Survivor 영역의 둘 중 하나는 반드시 비어있음)
+- Old
+  - 오래 살아있는 객체들은 Old duddurdmfh dlehd
+- Perm
+  - 클래스나 메소드에 대한 정보가 쌓임
+    (이 곳에 저장되는 데이터는 많지만 위 2개가 핵심)
+
+GC 종류
+
+- Serial GC (사용 x)
+- Parallel Young Generation Collector
+- Parallel Old Generation Collector
+- Concurrent Mark & Sweep Collector
+- G1
+
+</details>
