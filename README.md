@@ -809,3 +809,36 @@ toString → NPE
 valoueOf → null → StringBuilder로 변환해서 string 덧셈 연산을 가능하게 해줌
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 22.자바랭 다음으로 많이 쓰는 컬렉션 - Part1(List)</h2></summary>
+
+java.util.Collections
+
+순서가 있는 목록 List
+
+- ArrayList : 확장 가능한 배열, Thread-safe 하지 않음 (기본 크기는 10)
+- Vector : 확장 가능한 배열, Thread-safe 함
+- Stack : Vector를 확장한 LIFO 방식의 컬렉션
+
+순서가 중요하지 않는 Set
+
+먼저 들어온 것이 먼저 나가는 Queue
+
+key-value으로 저장되는 Map (별도의 인터페이스로 선언됨)
+
+ArrayList 메소드
+
+배열.lenght = 배열의 저장 공간의 개수
+
+collection.size() = 들어가 있는 데이터의 개수
+
+remove(Object o) : 객체와 동일한 첫번째 데이터만 삭제
+
+remove(Collections<?> c) : 매개변수로 넘어온 컬렉션에 있는 데이터와 동일한 모든 데이터를 삭제
+
+trimToSize() : 컬렉션 객체 공간의 크기를 데이터의 개수만큼 변경함
+(사용하지 않는 공간을 없애버림)
+
+</details>
