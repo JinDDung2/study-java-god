@@ -812,7 +812,7 @@ valoueOf → null → StringBuilder로 변환해서 string 덧셈 연산을 가�
 
 <details>
 
-<summary><h2>Chapter 22.자바랭 다음으로 많이 쓰는 컬렉션 - Part1(List)</h2></summary>
+<summary><h2>Chapter 22.자바랭 다음으로 많이 쓰는 애들은 컬렉션 - Part1(List)</h2></summary>
 
 java.util.Collections
 
@@ -845,7 +845,7 @@ trimToSize() : 컬렉션 객체 공간의 크기를 데이터의 개수만큼 �
 
 <details>
 
-<summary><h2>Chapter 23 자바랭 다음으로 많이 스는 컬렉션 - Part2(Set과 Queue)</h2></summary>
+<summary><h2>Chapter 23 자바랭 다음으로 많이 쓰는 애들은 컬렉션 - Part2(Set과 Queue)</h2></summary>
 
 Set은 순서와 상관 없이, 어떤 데이터가 존재하는지 확인하기 위한 용도로 사용
 
@@ -866,5 +866,41 @@ LinkedList 클래스가 구현한 인터페이스 중 Deque가 있음
 LinkedList는 배열과 다르게 미리 공간을 만들지 않음 → 각 데이터들이 앞뒤로 연결되는 구조이기 때문
 
 addFirst(), addLast(), removeFirst(), removeLast()
+
+</details>
+
+<details>
+
+<summary><h2>Chapter 24. 자바랭 다음으로 많이 쓰는 애들은 컬렉션 - Part3(Map)</h2></summary>
+
+Map은 key와 value로 이루어져 있음
+
+HashMap(성능 좋음), TreeMap(정렬 보장), LinkedHashMap이 있음. 그리고 Hashtable이 있음
+
+Hashtable 클래스는 Map 인터페이스를 구현하긴 했지만 다른 점이 있음
+
+- Map은 Collection view를 사용하지만, Hashtable은 Enumeration 객체를 통해 데이터를 처리함
+- Map은 키, 값, 키-값 쌍으로 데이터를 순환하여 처리할 수 있지만 Hashtable은 이 중 키-값쌍으로 데이터를 순환하여 처리할 수 없다.
+- Map은 이터레이션을 처리하는 도중에 데이터를 삭제하는 안전한 방법을 제공하지만, Hashtable은 그러한 기능을 제공하지 않는다.
+
+HashMap은 key값에 null이 저장 가능하지만 Hashtable은 불가능하고, HashMap은 thread-safe하지 않지만, Hashtable은 thread-safe하다.
+
+Map으로 끝나는 클래스들은 여러 쓰레드에서 동시에 접근하여 처리할 필요가 있을 때에는  다음과 같이 선언해야함
+
+```java
+Map m = Collections.syschronizedMap(new HashMap(...));
+```
+
+HashMap 디폴트 생성자는 16개의 저장 공간을 갖는 HashMap 객체를 생성한다. 하지만, 그 보다 더 많은 데이터를 담는 경우 초기 크기를 지정해주는 것을 권장함.
+
+HashMap의 키는 기본형, 참조형 모두 가능 → 키를 객체로 할 경우 hashCode() 메소드와 equals() 메소드를 잘 구현해 두어야 함.
+
+HashMap에 객체가 들어갈 경우, hashCode() 메소드 결과 값에 따른 버켓(목록)형태의 바구나기 만들어짐. 만약 서로 다른 키가 저장되었는데, hashCode()가 동일하다면, 이 버켓에 여러 개의 값이 들어갈 수 있다. 버켓에 들어간 목록에 데이터가 여러 개일 경우, get() 메소드가 호출되면 객체의 equals() 메소드를 호출하여 동일한 값을 찾게 된다.
+
+Map에서는 데이터를 추가한다가 아니라 넣는다고 표현 → put()
+
+Map은 key가 중복되지 않는 것이 중요 → 데이터를 저장한 순서대로 결과를 출력하지 않음
+
+TreeMap은 저장하면서 키를 정렬한다. (숫자 > 알파벳 대문자 > 알파벳 소문자 > 한글)
 
 </details>
