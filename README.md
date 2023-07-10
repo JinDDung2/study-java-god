@@ -1227,3 +1227,50 @@ fiteWriter = new FileWriter(filename, true);
 ```
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 27. Serializable과 NIO도 살펴 봅시다</h2></summary>
+
+### Serializable 이 왜 필요한가?
+
+생성한 객체를 파일로 저장할 일도 있고, 저장한 객체를 읽을 수도 있다. 객체를 다른 서버로 보낼 때도 있고, 다른 서버에서 생성한 객체를 받을 일도 생길 수 있기 때문
+
+Serializable 인터페이스를 구현하면 JVM에서 해당 객체는 저장하거나 다른 서버로 전송할 수 있도록 해줌
+
+Serializable 인터페이스를 구현한 후에는 다음과 같이 serialVersionUID 라는 값을 지정해 주는 것을 권장
+(별도로 지정하지 않는다면, 자바 소스가 컴파일될 때 자동으로 생성)
+
+```java
+static final long serialVersionUID = 1L;
+```
+
+만약 A서버에 SerialDTO에는 변수가 3개있고, B서버에는 SerialDTO에 변수가 4개 있으면 자바에서는 처리를 못함 → 각 서버가 쉽게 해당 객체가 같은지 다른지를 확인할 수 있도록 하기 위해 serialVersionUID로 관리해주는 것
+
+→ 클래스 이름이 같더라도 serialVersionUID이 다르면 다른 클래스로 인식함 + 같은 serialVersionUID라고 할지라도, 변수의 개수나 타입 등이 다르면 다른 클래스로 인식함
+
+### **transient**
+
+- 자바의 예약어 → **transient private int number;**
+- 이 예약어를 사용한 변수는 Serializable 대상에서 제외됨
+- ex) 패스워드
+
+### NIO
+
+스트림을 사용하지 않고 채널, 버퍼를 사용 → 속도 증가
+
+채널 : 물건을 중간에서 처리하는 도매상
+
+버퍼 : 도매상에게 물건을 사고 파는 소매상
+
+Buffer 클래스 메소드
+
+- flip() - buffer가 담겨 있는 데이터의 가장 앞으로 이동 (”처음으로” 느낌) → limit 값을 변경시킴(limit = flip 사용하기 바로 전의 position)
+- int capacity() - 버퍼의 크기
+- int limit() - 읽거나 쓸 수 없는 “위치”
+- int position() - 현재 위치
+- int martk() -현재 postion을 mark
+
+> 0 ≤ mark ≤ position ≤ limit ≤ capacity
+
+</details>
