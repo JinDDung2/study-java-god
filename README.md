@@ -907,7 +907,7 @@ TreeMap은 저장하면서 키를 정렬한다. (숫자 > 알파벳 대문자 > 
 
 <details>
 
-<summary><h2>Chapter 2. 쓰레드는 개발자라면 알아두는 것이 좋아요</h2></summary>
+<summary><h2>Chapter 25. 쓰레드는 개발자라면 알아두는 것이 좋아요</h2></summary>
 
 (자바의 쓰래기 객체를 청소하는 GC 관련 쓰레드는 아무런 쓰레드를 생성하지 않아도 JVM을 관리하기 위한 쓰레드다.)
 
@@ -1091,5 +1091,139 @@ volatile을 남발하면 성능 저하를 야기함
 volatiled → 내가 갖고 있는 volatile 변수가 바뀌었어. 너도 이거 쓰니까 바꿔
 
 쓰레드가 동일한 객체의 인스턴스 변수에 대해 데이터문제가 발생하는 이유: JIT컴파일러가 최적화를 수행하기 때문 → 쓰레드가 보다 빠르게 수행할 수 있도록 변수를 캐시에 두고 최적화가 되어서 발생하는 문제를 해결하기 위함.
+
+</details>
+
+<details>
+
+<summary><h2>Chapter26. 파일에 있는 것을 읽고 쓰려면 아이오를 알아야죠</h2></summary>
+
+java.io 패키지에 있음
+
+JVM 기준으로 Input과 Output이라는 것!
+
+바이트 기반의 데이터를 처리하기 위해 여러 종류의 스트림이라는 클래스를 제공함.
+
+(Stream : 끊기지 않는 연속적인 데이터)
+
+InputStream : 읽는 작업 / OutputStream : 쓰는 작업
+
+char 기반의 문자열로만 되어 있는 파일은 Reader와 Writer 클래스로 처리
+
+Java 1.4부터 빠른 I/O를 위해 NIO(New I/O) 추가 → 스트림 기반이 아닌, 버퍼와 채널 기반으로 데이터 처리
+
+Java 7부터 NIO2 추가
+
+## File
+
+클래스 이름은 파일이지만, 정확하게는 파일 및 **파일의 경로 정보**를 통제하기 위한 클래스
+
+객체를 생성하여 데이터를 처리
+
+- 생성항 파일 객체가 가리키고 있는 것이 존재하는지, 파일인지 경로인지, 읽거나 쓰거나 수행할 수 있는지, 언제 수정되는지 확인하는 기능
+- 해당 파일의 이름을 바꾸고, 삭제하고, 생성하고, 전체 경로를 확인하는 기능
+
+파일 경로 확인하는 법
+
+```java
+String pathName = "C:\\godofjava\\text"; // window
+String pathName = ".godofjava/text"; // 유닉스 계열 OS
+String pathName = File.separator + "godofjava" + File.separator + "text";
+```
+
+File 객체가 파일인지, 경로인지 확인하는 법
+
+```java
+File file = new File(pathName);
+file.isDirectory(); // 파일 경로인지 확인
+file.isFile(); // 파일인지 확인
+file.isHidden(); // 숨겨진 파일 확인
+```
+
+File 객체에 읽거나 쓰거나 실행할 수 있는 권한 확인하는 법
+
+```java
+File file = new File(pathName);
+file.canRead();
+file.canWrite();
+file.canExecute(); // java 6부터 추가
+file.lastModified(); // 파일이나 경로가 언제 생성되었는지
+System.out.println(printName + " last modified = " + new Date(fiel.lastModified())); // long 타입의 현재 시간을 리턴하기 때문에 java.util 패키지의 Date 클래스를 사용하여 시간 확인하기
+```
+
+생성자 함수 중 listFiles(FileFilter filter), listFiles(FilenameFilter filter)가 존재
+
+FileFilter 언터페이스 accpet(File pathname) → 파라미터로 넘어온 File 객체가 조건에 맞는지 확인 → 파일 객체가 파일인지 경로인지 확인하는 방법이 필요
+
+```java
+if (file.isFile()) {
+	String filename = file.getName();
+	if (filename.endswith(".jpg)) {
+		// ...
+	}
+}
+```
+
+FilenameFilter 인터페이스 accept(File dir, String name) → 파라미터로 넘어온 디렉토이에 있는 경로나, 파일 이름이 조건에 맞는지 확인 → 파일 객체가 파일인지 경로인지 확인하는 방법이 없어도 됨 → but name에서 “.jpg” 같은 디렉토리를 만날 경우에도 리스트에 포함하게 됨.
+
+```java
+if (filename.endsWith(".jpg")) {
+	// ...
+}
+```
+
+## Files
+
+File 클래스는 정체가 불분명하고, 심볼릭 링크와 같은 유닉스 계열의 파일에서 사용하는 몇몇 기능을 제대로 제공하지 못함 → NIO2 등장 →java.nio.file 패키지에 있는 Files 클래스에서 File 클래스에 있는 메소드들을 대체하여 제공
+
+모든 메소드가 static으로 선언되어 별도의 객체를 생성할 필요가 없음
+
+## InputStream
+
+```java
+public abstract class InputStream extends Object implements Closealbe
+```
+
+Closeable 인터페이스는 close 메서드만 선언됨 → 해당 리소스를 다른 클래스에도 작업할 수 있도록, java.io 패키지에 있는 클래스를 사용할 때는 하던 작업이 종료되면 항상 close() 메소드로 닫어야 함
+
+## OutputStream
+
+```java
+public abstract class OutputStream extends Object implements Closealbe, Flushable
+```
+
+Flushable 인터페이스에는 flush() 메소드 → 어떤 리소스에 데이터를 쓸 때, 매번 쓰기 작업을 “요청할 때 마다 저장”하면 효율이 안좋아지기에 “현재 버퍼에 있는 내용을 기다리지 말고 무조건 저장해” 하는 것
+
+## Reader와 Writer
+
+Stream은 byte 기반 데이터를 다루는 것이며, Reader와 Writer는 char 기반의 문자열을 처리하기 위한 클래스다.
+
+### Reader
+
+```java
+public abstract class Reader extends Object implements Readable, Closealbe
+```
+
+### Writer
+
+```java
+public abstract class Writer extends Object implements Appendable, Closealbe, Flushable
+```
+
+append(char c) 메서드 존재
+
+append(CharSequence csq) → CharSequence 인터페이스를 구현한 클래스 → String, StringBuilder, StringBuffer
+
+❗️주의할 점
+
+- finally 에서 close 하기
+- BufferWriter 먼저 close 하기
+- FileWriter close 하기 (최근에 생성된 객체 순서대로 닫아야함)
+
+```java
+fiteWriter = new FileWriter(filename, true);
+// true -> 이어쓰기
+// false -> 덮어쓰기
+```
 
 </details>
