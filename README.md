@@ -1274,3 +1274,114 @@ Buffer 클래스 메소드
 > 0 ≤ mark ≤ position ≤ limit ≤ capacity
 
 </details>
+
+<details>
+
+<summary><h2>Chapter 28. 다른 서보로 데이터를 보내려면 어떻게 하면 되나요?</h2></summary>
+
+TCP 통신을 한다면 자바에서 제공하는 API를 사용하면 된다. 즉, 애플리케이션 층에서 프로그래밍만 하면 트랜스포트 층에서의 처리는 자바가 알아서 해줌.
+
+TCP → 연결지향적, 신뢰성 보장
+
+UDP → 빠른 속도, 저렴한 비용
+
+## Socket 클래스
+
+java,net 패키지
+
+데이터를 보내는 쪽(클라이언트)에서 객체를 생성해서 사용
+
+데이터를 받는 쪽(서버)에서 요청을 받으면, 요청에 대한 Socket 객체를 생성하여 데이터를 처리
+
+→ ServerSocket 클래스를 사용하여 데이터를 받음
+
+서버에서 요청에 대한 객체 Socket은 new 키워드를 통해 만들 필요는 없음 → ServerSocker 클래스에서 제공하는 메소드에서 클라이언트 요청이 생기면 Socket 객체를 생성해서 전달해줌
+
+### ServerSocket에서 알아야 할 생성자와 2개의 메소드
+
+| 생성자 | 설명 |
+| --- | --- |
+| ServerSocket() | 서버 소켓 객체만 생성 |
+| ServerSocket(int port) | 지정된 포트를 사용하는 서버 소켓을 생성 |
+| ServerSocket(int port, int backlog) | 지정된 포트와 backlog 개수를 가지는 소켓 생성 |
+| ServerSocket(int port, int backlog, InetAddress bindArr) | 지정된 포트와 backlog 개수를 가지는 소켓을 생성하며, bindArr에 있는 주소에서의 접근만 허용 |
+
+backlog : 큐의 개수 → ServerSocket 객체가 바빠서 연결 요청을 처리 못하고 대기시킬 때, 그 때의 최대 개수 (default : 50개)
+
+👀 유의할점
+
+매개 변수가 없는 ServerSocket 클래스를 제외한 나머지 클래스들은 객체가 생성되자 마자 연결을 대기할 수 있는 상태가 됨. → 디폴트 생성자는 별도로 연결 작업을 해야만 대기가 가능함. → accpt() 메서드 사용
+
+| 리턴 타입 | 메서드 | 설명 |
+| --- | --- | --- |
+| Socket | accept() | 새로운 소켓 연결을 기다리고, 연결되면 Socket 객체 리턴 |
+| void | close() | 소켓 연결을 종료 |
+
+### Socket
+
+데이터를 보내는 클라이언트에서는 Socket 객체를 직접 생성해야 함.
+
+![img.png](imgs/socket.png)
+
+밑에서 두번째에 있는 host와 port를 지정하는 생성자를 사용하는 것이 가장 편함
+
+상위 세 개의 생성자를 제외한 나머지 생성자들은 모두 객체 생성과 함께 지정된 서버에 접속
+
+소켓 연결을 끊어주는 Timeout 관련 메서드는 꼭 확인하기
+
+서버 통신 중 발생할 수 있는 예외
+
+- java.net.BindException : Address already in us
+
+→ 이미 지정된 port번호를 사용하고 있기에 동일한 port 번호를 사용할 수 없음
+
+- java.net.ConnectException : Connection refused
+
+→ 서버를 띄어 놓지 않고 클라이언트 프로그램만 수행했을 때 발생 = 받을 서버가 없음
+
+## DatagramSocket
+
+UDP는 TCP와 달리 데이터를 주고 받기 위한 클래스가 단 하나 DatagramSocket 뿐임
+
+TCP는 스트림 객체를 얻어 데이터를 주고 받았지만
+
+UDP는 DatagramPacket이라는 클래스를 사용함
+
+### 생성자
+
+Socket 클래스의 생성자와 비슷하며 다음과 같다.
+
+![img.png](imgs/datagramSocketConstructor.png)
+
+### 메서드
+
+receive(DatagramPacket packet) : 데이터를 받기 위해 대기할 때
+
+sned(DatagramPacket packet) : 데이터를 보낼 떼
+
+![img.png](imgs/datagramSocketMethod.png)
+
+## DatagramPacket
+
+![img_1.png](imgs/datagramPacketConstructor.png)
+
+- byte 배열:전송되는 데이터를 의미
+- offset: 전송되는 byte 배열의 첫 위치를 의미
+- length: 데이터의 크기 (이 값 < byte 배열 크기 → throws java.lang.IllegalArgumentException)
+
+### 메서드
+
+- getData(): byte()로 전송받는 데이터 리턴
+- getLength(): 전송받는 데이터의 길이를 int 타입으로 리턴
+
+## 자바에서 웹 페이즈 요청하려면?
+
+자바 API에서 제공하는 URL 클래스를 사용하면 간단한 요청은 가능하나, 권장하지 않음
+
+이 클래스에서는 연걸에 대한 상세한 설정을 할 수 없기 때문
+
+일반적으로 Apache의 Http Components를 많이 사용
+
+자세한 사용법은 Http Components 사용법 검색
+
+</details>
